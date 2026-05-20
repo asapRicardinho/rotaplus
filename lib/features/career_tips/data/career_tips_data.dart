@@ -1,0 +1,17 @@
+const careerTips = [
+  'Use um e-mail profissional com seu nome.',
+  'Revise o currículo antes de enviar.',
+  'Destaque cursos, projetos escolares e trabalhos voluntários.',
+  'Não coloque informações falsas.',
+  'Mantenha o currículo simples e objetivo.',
+  'Personalize o objetivo profissional para cada vaga.',
+  'Pesquise sobre a empresa antes de se candidatar.',
+  'Organize seus documentos pessoais antes de participar de processos seletivos.',
+  'Inclua habilidades reais, como comunicação, responsabilidade e informática básica.',
+  'Use uma linguagem clara e evite gírias no currículo.',
+  'Salve o currículo com um nome de arquivo profissional.',
+  'Acompanhe as vagas às quais você se candidatou.',
+  'Peça para alguém de confiança revisar seu currículo.',
+  'Valorize experiências escolares, projetos, eventos e atividades voluntárias.',
+  'Atualize o currículo sempre que concluir um curso ou projeto novo.',
+];
