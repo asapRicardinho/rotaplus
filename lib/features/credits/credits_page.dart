@@ -108,7 +108,10 @@ class _AssetImagesGallery extends StatelessWidget {
   const _AssetImagesGallery();
 
   static const _imageExtensions = ['.png', '.jpg', '.jpeg', '.webp'];
-  static const _ignoredAssets = ['assets/icons/rota_plus_icon_source.png'];
+  static const _ignoredAssets = [
+    'assets/icons/rota_plus_icon_source.png',
+    'assets/icons/rota_plus_minimal_vocational_icon_512.png',
+  ];
   static const _imageTitles = ['Desenvolvimento', 'Apoio'];
 
   Future<List<String>> _loadImageAssets() async {

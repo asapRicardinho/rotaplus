@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rota_plus/app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   testWidgets('shows home page and opens vocational test', (tester) async {
+    SharedPreferences.setMockInitialValues({'privacy_terms_accepted_v1': true});
+
     await tester.pumpWidget(const RotaPlusApp());
 
     expect(find.text('Rota+'), findsWidgets);
@@ -20,6 +23,8 @@ void main() {
   });
 
   testWidgets('opens credits page', (tester) async {
+    SharedPreferences.setMockInitialValues({'privacy_terms_accepted_v1': true});
+
     await tester.pumpWidget(const RotaPlusApp());
 
     final creditsButton = find.widgetWithText(ElevatedButton, 'Créditos');
@@ -32,10 +37,12 @@ void main() {
     expect(find.text('Prof. Dr. Elvio Gilberto da Silva'), findsOneWidget);
     expect(find.text('Ricardo Mazzo do Nascimento'), findsOneWidget);
     expect(find.text('Felipe Saggioro Pinhatar'), findsOneWidget);
-    expect(find.text('Felipe Turini'), findsOneWidget);
+    expect(find.text('Felipe Jeske Turini'), findsOneWidget);
   });
 
   testWidgets('opens privacy terms page', (tester) async {
+    SharedPreferences.setMockInitialValues({'privacy_terms_accepted_v1': true});
+
     await tester.pumpWidget(const RotaPlusApp());
 
     final privacyTermsButton = find.widgetWithText(
@@ -47,5 +54,25 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Termos de privacidade'), findsOneWidget);
+  });
+
+  testWidgets('shows privacy terms consent on first launch', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.pumpWidget(const RotaPlusApp());
+    await tester.pumpAndSettle();
+
+    expect(find.text('Política de Privacidade'), findsOneWidget);
+    expect(find.text('Aceitar e continuar'), findsOneWidget);
+
+    await tester.tap(find.byType(CheckboxListTile));
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.widgetWithText(ElevatedButton, 'Aceitar e continuar'),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Política de Privacidade'), findsNothing);
   });
 }
