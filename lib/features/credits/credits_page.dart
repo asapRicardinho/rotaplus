@@ -109,6 +109,7 @@ class _AssetImagesGallery extends StatelessWidget {
 
   static const _imageExtensions = ['.png', '.jpg', '.jpeg', '.webp'];
   static const _ignoredAssets = [
+    'assets/icons/app_icon.png',
     'assets/icons/rota_plus_icon_source.png',
     'assets/icons/rota_plus_minimal_vocational_icon_512.png',
   ];

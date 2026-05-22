@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'privacy_terms_content.dart';
 
@@ -71,6 +72,17 @@ class PrivacyTermsDocument extends StatelessWidget {
 class _PublicUrlBox extends StatelessWidget {
   const _PublicUrlBox();
 
+  Future<void> _openPublicUrl(BuildContext context) async {
+    final uri = Uri.parse(PrivacyTermsContent.publicUrl);
+    final wasOpened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+    if (wasOpened || !context.mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Não foi possível abrir o site.')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -84,34 +96,42 @@ class _PublicUrlBox extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(Icons.link, color: colorScheme.secondary, size: 22),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'URL pública desta política',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.primary,
-                      fontWeight: FontWeight.w800,
+        child: InkWell(
+          onTap: () => _openPublicUrl(context),
+          borderRadius: BorderRadius.circular(8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.link, color: colorScheme.secondary, size: 22),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'URL pública desta política',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  SelectableText(
-                    PrivacyTermsContent.publicUrl,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.secondary,
-                      fontWeight: FontWeight.w700,
+                    const SizedBox(height: 4),
+                    Text(
+                      PrivacyTermsContent.publicUrl,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.secondary,
+                        fontWeight: FontWeight.w700,
+                        decoration: TextDecoration.underline,
+                        decorationColor: colorScheme.secondary,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              Icon(Icons.open_in_new, color: colorScheme.secondary, size: 20),
+            ],
+          ),
         ),
       ),
     );
